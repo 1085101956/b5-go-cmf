@@ -1,9 +1,3 @@
-// +----------------------------------------------------------------------
-// | B5GoCMF V1.0 [快捷通用基础管理开发平台]
-// +----------------------------------------------------------------------
-// | Author: 冰舞 <357145480@qq.com>
-// +----------------------------------------------------------------------
-
 package lib
 
 import (
@@ -16,7 +10,7 @@ import (
 // ParseHtml 解析约定的html
 func ParseHtml(files ...string) *template.Template {
 	//上传需要的页面
-	files = append(files,UploadHtml()...)
+	files = append(files, UploadHtml()...)
 
 	for i := 0; i < len(files); i++ {
 		files[i] = "template/admin/" + strings.Trim(files[i], "/") + ".html"
@@ -26,8 +20,6 @@ func ParseHtml(files ...string) *template.Template {
 	files = append(files, "template/admin/global/layout/default.html")
 	files = append(files, "template/admin/global/layout/form.html")
 	files = append(files, "template/admin/global/layout/full.html")
-
-
 
 	return template.Must(template.ParseFiles(files...))
 }
@@ -52,14 +44,14 @@ func TempFunc() map[string]any {
 	return map[string]any{
 		"inArray": tool.InArray,
 		"inMap":   tool.InMap,
-		"split": func(s string,sep string) []string{
-			return strings.Split(s,sep)
+		"split": func(s string, sep string) []string {
+			return strings.Split(s, sep)
 		},
-		"join": func(elems []string,sep string) string {
-			return strings.Join(elems,sep)
+		"join": func(elems []string, sep string) string {
+			return strings.Join(elems, sep)
 		},
-		"fileDomain": func(path string) string{
-			return tool.UrlDomain(path,true)
+		"fileDomain": func(path string) string {
+			return tool.UrlDomain(path, true)
 		},
 		"makeArray": func(args ...any) []any {
 			arr := make([]any, len(args))
@@ -87,7 +79,7 @@ func TempFunc() map[string]any {
 			return defaults
 		},
 		//往map[string]any 中设置一个值
-		"dataSet": func(key string,val any,data map[string]any) map[string]any {
+		"dataSet": func(key string, val any, data map[string]any) map[string]any {
 			data[key] = val
 			return data
 		},

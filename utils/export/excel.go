@@ -1,9 +1,3 @@
-// +----------------------------------------------------------------------
-// | B5GoCMF V1.0 [快捷通用基础管理开发平台]
-// +----------------------------------------------------------------------
-// | Author: 冰舞 <357145480@qq.com>
-// +----------------------------------------------------------------------
-
 package export
 
 import (
@@ -66,7 +60,7 @@ func (e *ExcelExport) setSavePath() error {
 	e.FileName = core.G_GENID.New().String() + ".xlsx"
 	e.Url = e.Path + "/" + e.FileName
 
-	if err := tool.DirCreate(e.Path);err != nil {
+	if err := tool.DirCreate(e.Path); err != nil {
 		return errors.New("保存目录创建失败" + err.Error())
 	}
 	return nil

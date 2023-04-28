@@ -1,9 +1,3 @@
-// +----------------------------------------------------------------------
-// | B5GoCMF V1.0 [快捷通用基础管理开发平台]
-// +----------------------------------------------------------------------
-// | Author: 冰舞 <357145480@qq.com>
-// +----------------------------------------------------------------------
-
 package common
 
 import (
@@ -15,9 +9,9 @@ import (
 	"html/template"
 )
 
-func (c *IndexController) Route(engine *gin.Engine,group *gin.RouterGroup) {
-	group.GET(c.Dispatch("index",false, c.Index))
-	group.GET(c.Dispatch("home",false, c.Home))
+func (c *IndexController) Route(engine *gin.Engine, group *gin.RouterGroup) {
+	group.GET(c.Dispatch("index", false, c.Index))
+	group.GET(c.Dispatch("home", false, c.Home))
 }
 
 type IndexController struct {
@@ -33,20 +27,20 @@ func NewIndexController() *IndexController {
 }
 
 func (c *IndexController) Index(ctx *gin.Context) {
-	userInfo := map[string]string{"nick_name":"","struct":""}
+	userInfo := map[string]string{"nick_name": "", "struct": ""}
 
 	loginData := services.GetLoginByCtx(ctx)
-	if loginData!=nil {
+	if loginData != nil {
 		userInfo["nick_name"] = loginData.NickName
-		userInfo["struct"] = system.NewStructService().GetName(loginData.StructId,false)
+		userInfo["struct"] = system.NewStructService().GetName(loginData.StructId, false)
 	}
 
 	list := services.AdminMenuShowList(ctx)
 	html := ""
-	if list != nil && len(list)>0 {
-		html = services.AdminMenuToHtml(list,0)
+	if list != nil && len(list) > 0 {
+		html = services.AdminMenuToHtml(list, 0)
 	}
-	c.Render(ctx, "index", gin.H{"user": userInfo,"menuHtml":&types.HtmlShow{Html: template.HTML(html)}})
+	c.Render(ctx, "index", gin.H{"user": userInfo, "menuHtml": &types.HtmlShow{Html: template.HTML(html)}})
 }
 
 func (c *IndexController) Home(ctx *gin.Context) {

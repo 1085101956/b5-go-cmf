@@ -1,9 +1,3 @@
-// +----------------------------------------------------------------------
-// | B5GoCMF V1.0 [快捷通用基础管理开发平台]
-// +----------------------------------------------------------------------
-// | Author: 冰舞 <357145480@qq.com>
-// +----------------------------------------------------------------------
-
 package system
 
 import (
@@ -14,11 +8,11 @@ import (
 )
 
 // Route 定义该控制器的路由
-func (c *LoginLogController) Route(engine *gin.Engine,group *gin.RouterGroup) {
-	group.GET(c.Dispatch("index",false, c.Index))
-	group.POST(c.Dispatch("index",false, c.FindList))
-	group.POST(c.Dispatch("trash",false, c.Trash))
-	group.POST(c.Dispatch("drop_all",false, c.DropAll))
+func (c *LoginLogController) Route(engine *gin.Engine, group *gin.RouterGroup) {
+	group.GET(c.Dispatch("index", false, c.Index))
+	group.POST(c.Dispatch("index", false, c.FindList))
+	group.POST(c.Dispatch("trash", false, c.Trash))
+	group.POST(c.Dispatch("drop_all", false, c.DropAll))
 }
 
 type LoginLogController struct {

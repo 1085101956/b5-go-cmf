@@ -1,9 +1,3 @@
-// +----------------------------------------------------------------------
-// | B5GoCMF V1.0 [快捷通用基础管理开发平台]
-// +----------------------------------------------------------------------
-// | Author: 冰舞 <357145480@qq.com>
-// +----------------------------------------------------------------------
-
 package core
 
 // ** 简单封装的基于IModel快速增删改查操作 ** //
@@ -332,11 +326,11 @@ func (dm *Dao) SetTable(table string) *Dao {
 func (dm *Dao) buildOrder() string {
 	order := ""
 	for _, val := range dm.OrderBy {
-		field :=val.Key
+		field := val.Key
 		if field == "" {
 			continue
 		}
-		asc :=val.Value
+		asc := val.Value
 		if asc == "" {
 			asc = "asc"
 		}

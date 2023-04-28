@@ -1,9 +1,3 @@
-// +----------------------------------------------------------------------
-// | B5GoCMF V1.0 [快捷通用基础管理开发平台]
-// +----------------------------------------------------------------------
-// | Author: 冰舞 <357145480@qq.com>
-// +----------------------------------------------------------------------
-
 package services
 
 import (
@@ -167,13 +161,13 @@ func (s *GenService) createController() error {
 	return nil
 }
 
-//createIndexHtml 创建index.html
-func (s *GenService) createIndexHtml() error{
+// createIndexHtml 创建index.html
+func (s *GenService) createIndexHtml() error {
 	if s.Type != "0" && s.Type != "2" && s.Type != "3" {
 		return nil
 	}
 	//生成路径和文件
-	genPath := "template/admin/" + s.Modules + "/"+s.Class+"/"
+	genPath := "template/admin/" + s.Modules + "/" + s.Class + "/"
 	genFile := genPath + "index.html"
 	if tool.FileExist(genFile) {
 		return s.error("index.html文件: 已存在")
@@ -188,7 +182,7 @@ func (s *GenService) createIndexHtml() error{
 	tempContent := string(tempFile)
 
 	//字段处理
-	viewer :=""
+	viewer := ""
 	fieldHtml := ""
 	fields := s.Schema.TableFields(s.Table)
 	for _, field := range fields {
@@ -196,13 +190,13 @@ func (s *GenService) createIndexHtml() error{
 		if title == "" {
 			title = field.Name
 		}
-		if field.Name =="id"{
+		if field.Name == "id" {
 			continue
 		}
 
 		//状态栏字段
 		if field.Name == "status" || field.Name == "state" {
-			fieldHtml +="				{\n" +
+			fieldHtml += "				{\n" +
 				"                	field: '" + field.Name + "',\n" +
 				"                	title: '" + title + "',\n" +
 				"					sortable: true,\n" +
@@ -214,35 +208,35 @@ func (s *GenService) createIndexHtml() error{
 		}
 
 		//图片字段
-		if strings.Index(field.Name,"img")>-1 {
-			viewer ="{{block \"viewer\" .}}{{end}}"
-			fieldHtml += "				{\n"+
+		if strings.Index(field.Name, "img") > -1 {
+			viewer = "{{block \"viewer\" .}}{{end}}"
+			fieldHtml += "				{\n" +
 				"                	field: '" + field.Name + "',\n" +
 				"                	title: '" + title + "',\n" +
-				"					formatter: function (value, row, index) {\n"+
-				"						return $.table.imageView(row,'"+field.Name+"');\n"+
+				"					formatter: function (value, row, index) {\n" +
+				"						return $.table.imageView(row,'" + field.Name + "');\n" +
 				"					}\n" +
 				"				},\n"
 			continue
 		}
-		if field.Name == "url" || field.Name == "link"{
-			fieldHtml += "				{\n"+
+		if field.Name == "url" || field.Name == "link" {
+			fieldHtml += "				{\n" +
 				"                	field: '" + field.Name + "',\n" +
 				"                	title: '" + title + "',\n" +
-				"					formatter: function (value, row, index) {\n"+
-				"						return $.table.tooltip(value,25,'link');\n"+
+				"					formatter: function (value, row, index) {\n" +
+				"						return $.table.tooltip(value,25,'link');\n" +
 				"					}\n" +
 				"				},\n"
 			continue
 		}
 
 		//过长的字符串
-		if field.Type == "varchar" &&  (field.Max !=nil && *field.Max > 50){
-			fieldHtml += "				{\n"+
+		if field.Type == "varchar" && (field.Max != nil && *field.Max > 50) {
+			fieldHtml += "				{\n" +
 				"                	field: '" + field.Name + "',\n" +
 				"                	title: '" + title + "',\n" +
-				"					formatter: function (value, row, index) {\n"+
-				"						return $.table.tooltip(value,25);\n"+
+				"					formatter: function (value, row, index) {\n" +
+				"						return $.table.tooltip(value,25);\n" +
 				"					}\n" +
 				"				},\n"
 			continue
@@ -268,12 +262,12 @@ func (s *GenService) createIndexHtml() error{
 	}
 	return nil
 }
-func (s *GenService) createAddHtml() error{
+func (s *GenService) createAddHtml() error {
 	if s.Type != "0" && s.Type != "2" && s.Type != "3" {
 		return nil
 	}
 	//生成路径和文件
-	genPath := "template/admin/" + s.Modules + "/"+s.Class+"/"
+	genPath := "template/admin/" + s.Modules + "/" + s.Class + "/"
 	genFile := genPath + "add.html"
 	if tool.FileExist(genFile) {
 		return s.error("add.html文件: 已存在")
@@ -291,7 +285,7 @@ func (s *GenService) createAddHtml() error{
 	fieldHtml := ""
 	fields := s.Schema.TableFields(s.Table)
 	for _, field := range fields {
-		if field.Name =="id" || field.Name =="create_time" || field.Name =="update_time" {
+		if field.Name == "id" || field.Name == "create_time" || field.Name == "update_time" {
 			continue
 		}
 		title := *field.Comment
@@ -300,37 +294,37 @@ func (s *GenService) createAddHtml() error{
 		}
 		//状态栏字段
 		if field.Name == "status" || field.Name == "state" {
-			fieldHtml +="	<div class=\"form-group\">\n" +
+			fieldHtml += "	<div class=\"form-group\">\n" +
 				"		<label class=\"col-sm-3 control-label is-required\">" + title + "：</label>\n" +
-				"		<div class=\"col-sm-8\">\n"+
-				"			<label class=\"radio-box\">\n"+
-				"				<input type=\"radio\" name=\"status\" value=\"0\"/> 隐藏\n"+
-				"			</label>\n"+
-				"			<label class=\"radio-box\">\n"+
-				"				<input type=\"radio\" name=\"status\" value=\"1\" checked/> 显示\n"+
-				"			</label>\n"+
-				"		</div>\n"+
+				"		<div class=\"col-sm-8\">\n" +
+				"			<label class=\"radio-box\">\n" +
+				"				<input type=\"radio\" name=\"status\" value=\"0\"/> 隐藏\n" +
+				"			</label>\n" +
+				"			<label class=\"radio-box\">\n" +
+				"				<input type=\"radio\" name=\"status\" value=\"1\" checked/> 显示\n" +
+				"			</label>\n" +
+				"		</div>\n" +
 				"	</div>\n"
 			continue
 		}
 
 		//文本框
-		if field.Name =="remark" || field.Name =="note" || field.Name =="desc" {
-			fieldHtml +="	<div class=\"form-group\">\n" +
+		if field.Name == "remark" || field.Name == "note" || field.Name == "desc" {
+			fieldHtml += "	<div class=\"form-group\">\n" +
 				"		<label class=\"col-sm-3 control-label is-required\">" + title + "：</label>\n" +
-				"		<div class=\"col-sm-8\">\n"+
-				"			<textarea type=\"text\" name=\""+ field.Name +"\" class=\"form-control\"></textarea>\n"+
-				"		</div>\n"+
+				"		<div class=\"col-sm-8\">\n" +
+				"			<textarea type=\"text\" name=\"" + field.Name + "\" class=\"form-control\"></textarea>\n" +
+				"		</div>\n" +
 				"	</div>\n"
 			continue
 		}
 
 		//普通
-		fieldHtml +="	<div class=\"form-group\">\n" +
+		fieldHtml += "	<div class=\"form-group\">\n" +
 			"		<label class=\"col-sm-3 control-label is-required\">" + title + "：</label>\n" +
-			"		<div class=\"col-sm-8\">\n"+
-			"			<input type=\"text\" name=\""+ field.Name +"\" class=\"form-control\" required autocomplete=\"off\"/>\n"+
-			"		</div>\n"+
+			"		<div class=\"col-sm-8\">\n" +
+			"			<input type=\"text\" name=\"" + field.Name + "\" class=\"form-control\" required autocomplete=\"off\"/>\n" +
+			"		</div>\n" +
 			"	</div>\n"
 	}
 
@@ -354,7 +348,7 @@ func (s *GenService) createEditHtml() error {
 		return nil
 	}
 	//生成路径和文件
-	genPath := "template/admin/" + s.Modules + "/"+s.Class+"/"
+	genPath := "template/admin/" + s.Modules + "/" + s.Class + "/"
 	genFile := genPath + "edit.html"
 	if tool.FileExist(genFile) {
 		return s.error("edit.html文件: 已存在")
@@ -372,7 +366,7 @@ func (s *GenService) createEditHtml() error {
 	fieldHtml := ""
 	fields := s.Schema.TableFields(s.Table)
 	for _, field := range fields {
-		if field.Name =="id" || field.Name =="create_time" || field.Name =="update_time" {
+		if field.Name == "id" || field.Name == "create_time" || field.Name == "update_time" {
 			continue
 		}
 		humpName := tool.StrToHump(field.Name)
@@ -382,37 +376,37 @@ func (s *GenService) createEditHtml() error {
 		}
 		//状态栏字段
 		if field.Name == "status" || field.Name == "state" {
-			fieldHtml +="	<div class=\"form-group\">\n" +
+			fieldHtml += "	<div class=\"form-group\">\n" +
 				"		<label class=\"col-sm-3 control-label is-required\">" + title + "：</label>\n" +
-				"		<div class=\"col-sm-8\">\n"+
-				"			<label class=\"radio-box\">\n"+
-				"				<input type=\"radio\" name=\"status\" value=\"0\" {{if eq $.info."+humpName+" \"0\"}} checked {{end}}/> 隐藏\n"+
-				"			</label>\n"+
-				"			<label class=\"radio-box\">\n"+
-				"				<input type=\"radio\" name=\"status\" value=\"1\" {{if eq $.info."+humpName+" \"1\"}} checked {{end}}/> 显示\n"+
-				"			</label>\n"+
-				"		</div>\n"+
+				"		<div class=\"col-sm-8\">\n" +
+				"			<label class=\"radio-box\">\n" +
+				"				<input type=\"radio\" name=\"status\" value=\"0\" {{if eq $.info." + humpName + " \"0\"}} checked {{end}}/> 隐藏\n" +
+				"			</label>\n" +
+				"			<label class=\"radio-box\">\n" +
+				"				<input type=\"radio\" name=\"status\" value=\"1\" {{if eq $.info." + humpName + " \"1\"}} checked {{end}}/> 显示\n" +
+				"			</label>\n" +
+				"		</div>\n" +
 				"	</div>\n"
 			continue
 		}
 
 		//文本框
-		if field.Name =="remark" || field.Name =="note" || field.Name =="desc" {
-			fieldHtml +="	<div class=\"form-group\">\n" +
+		if field.Name == "remark" || field.Name == "note" || field.Name == "desc" {
+			fieldHtml += "	<div class=\"form-group\">\n" +
 				"		<label class=\"col-sm-3 control-label is-required\">" + title + "：</label>\n" +
-				"		<div class=\"col-sm-8\">\n"+
-				"			<textarea type=\"text\" name=\""+ field.Name +"\" class=\"form-control\">{{.info."+humpName+"}}</textarea>\n"+
-				"		</div>\n"+
+				"		<div class=\"col-sm-8\">\n" +
+				"			<textarea type=\"text\" name=\"" + field.Name + "\" class=\"form-control\">{{.info." + humpName + "}}</textarea>\n" +
+				"		</div>\n" +
 				"	</div>\n"
 			continue
 		}
 
 		//普通
-		fieldHtml +="	<div class=\"form-group\">\n" +
+		fieldHtml += "	<div class=\"form-group\">\n" +
 			"		<label class=\"col-sm-3 control-label is-required\">" + title + "：</label>\n" +
-			"		<div class=\"col-sm-8\">\n"+
-			"			<input type=\"text\" name=\""+ field.Name +"\" value=\"{{.info."+humpName+"}}\" class=\"form-control\" required autocomplete=\"off\"/>\n"+
-			"		</div>\n"+
+			"		<div class=\"col-sm-8\">\n" +
+			"			<input type=\"text\" name=\"" + field.Name + "\" value=\"{{.info." + humpName + "}}\" class=\"form-control\" required autocomplete=\"off\"/>\n" +
+			"		</div>\n" +
 			"	</div>\n"
 	}
 	//替换占位信息
@@ -430,7 +424,6 @@ func (s *GenService) createEditHtml() error {
 	}
 	return nil
 }
-
 
 func (s *GenService) checkParams() error {
 	if s.Db == "" {

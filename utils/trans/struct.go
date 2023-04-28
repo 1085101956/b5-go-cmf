@@ -1,9 +1,3 @@
-// +----------------------------------------------------------------------
-// | B5GoCMF V1.0 [快捷通用基础管理开发平台]
-// +----------------------------------------------------------------------
-// | Author: 冰舞 <357145480@qq.com>
-// +----------------------------------------------------------------------
-
 package trans
 
 import (
@@ -41,7 +35,7 @@ func AnyToSlice(arr any) []any {
 	return ret
 }
 
-func AnyToMapList(arr any) []map[string]any  {
+func AnyToMapList(arr any) []map[string]any {
 	v := reflect.ValueOf(arr)
 	if v.Kind() != reflect.Slice {
 		return nil
@@ -54,16 +48,16 @@ func AnyToMapList(arr any) []map[string]any  {
 		vv := reflect.ValueOf(item)
 		if vv.Kind() == reflect.Map {
 			keys := vv.MapKeys()
-			for _,elem := range keys{
+			for _, elem := range keys {
 				data[elem.String()] = vv.MapIndex(elem).Interface()
 			}
-		}else if vv.Kind() == reflect.Struct {
+		} else if vv.Kind() == reflect.Struct {
 			tt := reflect.TypeOf(item)
 			ll := tt.NumField()
 			for ii := 0; ii < ll; ii++ {
 				data[tt.Field(ii).Name] = vv.Field(ii).Interface()
 			}
-		}else{
+		} else {
 			data = nil
 		}
 		ret[i] = data
@@ -71,7 +65,7 @@ func AnyToMapList(arr any) []map[string]any  {
 	return ret
 }
 
-//StructListToMapList 将结构体切片转为[]map[sting]any
+// StructListToMapList 将结构体切片转为[]map[sting]any
 func StructListToMapList(dest []any, isJson bool) []map[string]any {
 	list := make([]map[string]any, len(dest))
 	for index, item := range dest {

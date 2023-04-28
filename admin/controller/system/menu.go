@@ -1,9 +1,3 @@
-// +----------------------------------------------------------------------
-// | B5GoCMF V1.0 [快捷通用基础管理开发平台]
-// +----------------------------------------------------------------------
-// | Author: 冰舞 <357145480@qq.com>
-// +----------------------------------------------------------------------
-
 package system
 
 import (
@@ -18,16 +12,16 @@ import (
 )
 
 // Route 定义该控制器的路由
-func (c *MenuController) Route(engine *gin.Engine,group *gin.RouterGroup) {
-	group.GET(c.Dispatch("index",false, c.Index))
-	group.POST(c.Dispatch("index",false, c.FindList))
-	group.GET(c.Dispatch("add",false, c.Add))
-	group.POST(c.Dispatch("add",false, c.AddSave))
-	group.GET(c.Dispatch("edit",false, c.Edit))
-	group.POST(c.Dispatch("edit",false, c.EditSave))
-	group.POST(c.Dispatch("drop",false, c.Drop))
-	group.GET(c.Dispatch("tree",false, c.Tree))
-	group.POST(c.Dispatch("tree",false, c.TreeList))
+func (c *MenuController) Route(engine *gin.Engine, group *gin.RouterGroup) {
+	group.GET(c.Dispatch("index", false, c.Index))
+	group.POST(c.Dispatch("index", false, c.FindList))
+	group.GET(c.Dispatch("add", false, c.Add))
+	group.POST(c.Dispatch("add", false, c.AddSave))
+	group.GET(c.Dispatch("edit", false, c.Edit))
+	group.POST(c.Dispatch("edit", false, c.EditSave))
+	group.POST(c.Dispatch("drop", false, c.Drop))
+	group.GET(c.Dispatch("tree", false, c.Tree))
+	group.POST(c.Dispatch("tree", false, c.TreeList))
 }
 
 type MenuController struct {
@@ -48,7 +42,7 @@ func NewMenuController() *MenuController {
 	return c
 }
 func (c *MenuController) FindList(ctx *gin.Context) {
-	c.GetIndex(ctx, NewMenuModel().NewSlice(), "", nil, []types.KeyVal{{Key: "parent_id"},{Key: "list_sort"}})
+	c.GetIndex(ctx, NewMenuModel().NewSlice(), "", nil, []types.KeyVal{{Key: "parent_id"}, {Key: "list_sort"}})
 }
 
 func (c *MenuController) Add(ctx *gin.Context) {
@@ -61,8 +55,8 @@ func (c *MenuController) editRender(ctx *gin.Context, model core.IModel) {
 	c.Render(ctx, "edit", gin.H{"info": model, "typeList": NewMenuService().TypeList(), "parentName": parentName}, c.Group+"/menu/icon")
 }
 
-func (c *MenuController) saveBefore(ctx *gin.Context, model core.IModel,operate string) error  {
-	if operate != "edit"{
+func (c *MenuController) saveBefore(ctx *gin.Context, model core.IModel, operate string) error {
+	if operate != "edit" {
 		return nil
 	}
 	info := model.(*MenuModel)

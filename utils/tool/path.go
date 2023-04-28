@@ -1,9 +1,3 @@
-// +----------------------------------------------------------------------
-// | B5GoCMF V1.0 [快捷通用基础管理开发平台]
-// +----------------------------------------------------------------------
-// | Author: 冰舞 <357145480@qq.com>
-// +----------------------------------------------------------------------
-
 package tool
 
 import (
@@ -25,7 +19,7 @@ func DirCreate(path string) error {
 }
 
 // UrlDomain 拼接域名
-func UrlDomain(path string,isFile bool) string {
+func UrlDomain(path string, isFile bool) string {
 	if path == "" {
 		return path
 	}
@@ -37,20 +31,19 @@ func UrlDomain(path string,isFile bool) string {
 	if port != "80" {
 		domain = domain + ":" + port
 	}
-	if isFile &&  core.G_CONFIG.Server.OssDomain!="" {
+	if isFile && core.G_CONFIG.Server.OssDomain != "" {
 		domain = core.G_CONFIG.Server.OssDomain
 	}
 
 	return domain + "/" + strings.TrimLeft(path, "/")
 }
 
-//FileExist 判断文件是否存在
+// FileExist 判断文件是否存在
 func FileExist(path string) bool {
-	file,err := os.Stat(path)
+	file, err := os.Stat(path)
 	if err == nil {
 		return !file.IsDir()
-	}else  {
+	} else {
 		return !os.IsNotExist(err)
 	}
 }
-

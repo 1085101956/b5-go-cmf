@@ -1,9 +1,3 @@
-// +----------------------------------------------------------------------
-// | B5GoCMF V1.0 [快捷通用基础管理开发平台]
-// +----------------------------------------------------------------------
-// | Author: 冰舞 <357145480@qq.com>
-// +----------------------------------------------------------------------
-
 ///////////////  文件上传前处理程序及多平台工厂  /////////////////////
 
 package upload
@@ -44,7 +38,7 @@ func NewOss() B5Oss {
 type UploaderAction struct {
 	InputName string   //上传表单文件名
 	FileType  string   //上传类型 file img video
-	Cat     string   //保存分组
+	Cat       string   //保存分组
 	LimitExt  []string //后缀限制
 	LimitSize int64    //大小限制
 	Width     int      //裁剪宽度 FileType为img时生效
@@ -127,7 +121,7 @@ func (u *UploaderAction) reader(ctx *gin.Context) (*UploaderFileInfo, error) {
 	if err != nil {
 		return nil, err
 	}
-	info := &UploaderFileInfo{File: file,Cat: u.Cat}
+	info := &UploaderFileInfo{File: file, Cat: u.Cat}
 	if u.FileType == "img" {
 		info.Type = "img"
 		info.Width = u.Width

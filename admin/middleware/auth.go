@@ -1,9 +1,3 @@
-// +----------------------------------------------------------------------
-// | B5GoCMF V1.0 [快捷通用基础管理开发平台]
-// +----------------------------------------------------------------------
-// | Author: 冰舞 <357145480@qq.com>
-// +----------------------------------------------------------------------
-
 package middleware
 
 import (
@@ -13,16 +7,18 @@ import (
 	"b5gocmf/utils/core"
 	"b5gocmf/utils/tool"
 	"errors"
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"strings"
 )
 
-
-//AuthAdminMiddleWare 权限判断中间件
+// AuthAdminMiddleWare 权限判断中间件
 func AuthAdminMiddleWare() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		path := ctx.Request.URL.Path
+		fmt.Println(ctx, core.G_CONFIG.Route.Admin)
+
 		prefix := core.G_CONFIG.Route.Admin
 		if prefix == path {
 			return

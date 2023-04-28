@@ -1,9 +1,3 @@
-// +----------------------------------------------------------------------
-// | B5GoCMF V1.0 [快捷通用基础管理开发平台]
-// +----------------------------------------------------------------------
-// | Author: 冰舞 <357145480@qq.com>
-// +----------------------------------------------------------------------
-
 package types
 
 import (
@@ -22,7 +16,7 @@ type SimpleId struct {
 }
 
 type AutoKey struct {
-	Where map[string]string `json:"where"`
+	Where map[string]string `form:"where" json:"where"`
 }
 
 type HtmlShow struct {

@@ -1,9 +1,3 @@
-// +----------------------------------------------------------------------
-// | B5GoCMF V1.0 [快捷通用基础管理开发平台]
-// +----------------------------------------------------------------------
-// | Author: 冰舞 <357145480@qq.com>
-// +----------------------------------------------------------------------
-
 package lib
 
 import (
@@ -19,9 +13,9 @@ import (
 type FormSearch struct {
 	Data *SearchFormData
 
-	Where    string            //最终生成的 where 条件字符串
-	whereArr []string          //最终生成的 where 条件字数组
-	Args     []any             //最终生成的where 条件占位对应值数组
+	Where    string         //最终生成的 where 条件字符串
+	whereArr []string       //最终生成的 where 条件字数组
+	Args     []any          //最终生成的where 条件占位对应值数组
 	Order    []types.KeyVal // 最终生成order 集合
 	Limit    string
 
@@ -242,7 +236,7 @@ func (fs *FormSearch) parseOrder() {
 	}
 	order := fs.Order
 	if order == nil {
-		order = make([]types.KeyVal,0)
+		order = make([]types.KeyVal, 0)
 	}
 	has := false
 	for _, v := range order {
@@ -252,7 +246,7 @@ func (fs *FormSearch) parseOrder() {
 		}
 	}
 	if !has {
-		order = append(order, types.KeyVal{Key:fs.Data.OrderByColumn,Value: orderByAsc})
+		order = append(order, types.KeyVal{Key: fs.Data.OrderByColumn, Value: orderByAsc})
 	}
 	fs.Order = order
 }

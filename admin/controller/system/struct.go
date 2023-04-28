@@ -1,9 +1,3 @@
-// +----------------------------------------------------------------------
-// | B5GoCMF V1.0 [快捷通用基础管理开发平台]
-// +----------------------------------------------------------------------
-// | Author: 冰舞 <357145480@qq.com>
-// +----------------------------------------------------------------------
-
 package system
 
 import (
@@ -22,16 +16,16 @@ import (
 )
 
 // Route 定义该控制器的路由
-func (c *StructController) Route(engine *gin.Engine,group *gin.RouterGroup) {
-	group.GET(c.Dispatch("index",false, c.Index))
-	group.POST(c.Dispatch("index",false, c.FindList))
-	group.GET(c.Dispatch("add",false, c.Add))
-	group.POST(c.Dispatch("add",false, c.AddSave))
-	group.GET(c.Dispatch("edit",false, c.Edit))
-	group.POST(c.Dispatch("edit",false, c.EditSave))
-	group.POST(c.Dispatch("drop",false, c.Drop))
-	group.GET(c.Dispatch("tree",false, c.Tree))
-	group.POST(c.Dispatch("tree",false, c.TreeList))
+func (c *StructController) Route(engine *gin.Engine, group *gin.RouterGroup) {
+	group.GET(c.Dispatch("index", false, c.Index))
+	group.POST(c.Dispatch("index", false, c.FindList))
+	group.GET(c.Dispatch("add", false, c.Add))
+	group.POST(c.Dispatch("add", false, c.AddSave))
+	group.GET(c.Dispatch("edit", false, c.Edit))
+	group.POST(c.Dispatch("edit", false, c.EditSave))
+	group.POST(c.Dispatch("drop", false, c.Drop))
+	group.GET(c.Dispatch("tree", false, c.Tree))
+	group.POST(c.Dispatch("tree", false, c.TreeList))
 }
 
 type StructController struct {
@@ -55,7 +49,7 @@ func NewStructController() *StructController {
 }
 
 func (c *StructController) FindList(ctx *gin.Context) {
-	c.GetIndex(ctx, NewStructModel().NewSlice(), "", nil, []types.KeyVal{{Key: "parent_id"},{Key: "list_sort"}})
+	c.GetIndex(ctx, NewStructModel().NewSlice(), "", nil, []types.KeyVal{{Key: "parent_id"}, {Key: "list_sort"}})
 }
 
 func (c *StructController) indexAfter(ctx *gin.Context, list []any) []any {
@@ -136,10 +130,10 @@ func (c *StructController) TreeList(ctx *gin.Context) {
 	res := NewStructService().TreeList()
 
 	dataScope := services.NewDataScopeFilterByCtx(ctx)
-	list := make([]StructModel,0)
+	list := make([]StructModel, 0)
 	for _, model := range res {
-		if dataScope.CheckByFiled(model.Id,"") {
-			list= append(list, model)
+		if dataScope.CheckByFiled(model.Id, "") {
+			list = append(list, model)
 		}
 	}
 	list = NewStructService().ReRootList(list)

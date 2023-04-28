@@ -1,9 +1,3 @@
-// +----------------------------------------------------------------------
-// | B5GoCMF V1.0 [快捷通用基础管理开发平台]
-// +----------------------------------------------------------------------
-// | Author: 冰舞 <357145480@qq.com>
-// +----------------------------------------------------------------------
-
 package system
 
 import (
@@ -27,7 +21,6 @@ func NewAdminDao() *AdminDao {
 	})
 	return instanceAdminDao
 }
-
 
 func (d *AdminDao) GetInfoById(id string) *AdminModel {
 	model := d.Model.New()

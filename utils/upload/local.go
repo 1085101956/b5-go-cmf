@@ -1,9 +1,3 @@
-// +----------------------------------------------------------------------
-// | B5GoCMF V1.0 [快捷通用基础管理开发平台]
-// +----------------------------------------------------------------------
-// | Author: 冰舞 <357145480@qq.com>
-// +----------------------------------------------------------------------
-
 ////////////     本地文件上传代码实现       //////////////
 
 package upload
@@ -68,9 +62,9 @@ func (u *LocalOss) saveFile() error {
 			goto Origin
 		}
 		var imgDsc *image.NRGBA
-		if u.File.Width>0 && u.File.Height>0 {
-			imgDsc = imaging.Fill(imgSrc, u.File.Width, u.File.Height,imaging.Center, imaging.Lanczos)
-		}else{
+		if u.File.Width > 0 && u.File.Height > 0 {
+			imgDsc = imaging.Fill(imgSrc, u.File.Width, u.File.Height, imaging.Center, imaging.Lanczos)
+		} else {
 			imgDsc = imaging.Resize(imgSrc, u.File.Width, u.File.Height, imaging.Lanczos)
 		}
 		err := imaging.Save(imgDsc, savePath)

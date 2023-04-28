@@ -1,9 +1,3 @@
-// +----------------------------------------------------------------------
-// | B5GoCMF V1.0 [快捷通用基础管理开发平台]
-// +----------------------------------------------------------------------
-// | Author: 冰舞 <357145480@qq.com>
-// +----------------------------------------------------------------------
-
 package system
 
 import (
@@ -32,7 +26,7 @@ func NewStructDao() *StructDao {
 
 func (d *StructDao) MenuTreeList() *[]StructModel {
 	list := d.Model.NewSlice()
-	_ = core.NewDao(d.Model).SetField("id,parent_id,name").SetOrderBy([]types.KeyVal{{Key: "parent_id"},{Key: "list_sort"},{Key: "id"}}).Lists(list, "")
+	_ = core.NewDao(d.Model).SetField("id,parent_id,name").SetOrderBy([]types.KeyVal{{Key: "parent_id"}, {Key: "list_sort"}, {Key: "id"}}).Lists(list, "")
 	return list
 }
 

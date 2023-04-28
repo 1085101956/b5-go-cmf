@@ -1,9 +1,3 @@
-// +----------------------------------------------------------------------
-// | B5GoCMF V1.0 [快捷通用基础管理开发平台]
-// +----------------------------------------------------------------------
-// | Author: 冰舞 <357145480@qq.com>
-// +----------------------------------------------------------------------
-
 package tool
 
 import (
@@ -28,7 +22,7 @@ func InArray(value any, arr interface{}) bool {
 }
 
 // InMap 判断某个键是否存在map种
-func InMap(value any,target any) bool {
+func InMap(value any, target any) bool {
 	t := reflect.TypeOf(target)
 	fmt.Println(t.Kind())
 	if t.Kind() == reflect.Map {
@@ -47,6 +41,6 @@ func IsAjax(ctx *gin.Context) bool {
 	return ctx.GetHeader("X-Requested-With") == "XMLHttpRequest"
 }
 
-func IsRender(ctx *gin.Context) bool  {
+func IsRender(ctx *gin.Context) bool {
 	return !IsAjax(ctx) && strings.ToLower(ctx.Request.Method) == "get"
 }

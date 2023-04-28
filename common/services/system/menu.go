@@ -1,9 +1,3 @@
-// +----------------------------------------------------------------------
-// | B5GoCMF V1.0 [快捷通用基础管理开发平台]
-// +----------------------------------------------------------------------
-// | Author: 冰舞 <357145480@qq.com>
-// +----------------------------------------------------------------------
-
 package system
 
 import (
@@ -59,14 +53,14 @@ func (s *MenuService) GetParentName(parentId string) string {
 	return info.Name
 }
 
-//CheckPerms 查询权限节点
+// CheckPerms 查询权限节点
 func (s *MenuService) CheckPerms(perms string) string {
 	if perms == "" {
 		return ""
 	}
 	info := s.Dao.Model.New()
-	err := core.NewDao(s.Dao.Model).SetField("id").First(info, "`perms` = ?",perms)
-	if err != nil{
+	err := core.NewDao(s.Dao.Model).SetField("id").First(info, "`perms` = ?", perms)
+	if err != nil {
 		return ""
 	}
 	return info.Id

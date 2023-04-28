@@ -1,9 +1,3 @@
-// +----------------------------------------------------------------------
-// | B5GoCMF V1.0 [快捷通用基础管理开发平台]
-// +----------------------------------------------------------------------
-// | Author: 冰舞 <357145480@qq.com>
-// +----------------------------------------------------------------------
-
 package system
 
 import (
@@ -40,6 +34,6 @@ func (d *RoleDao) GetInfoById(id string) *RoleModel {
 
 func (d *RoleDao) GetLists() *[]RoleModel {
 	list := d.Model.NewSlice()
-	_ = core.NewDao(d.Model).SetOrderBy([]types.KeyVal{{Key: "list_sort"},{Key: "id"}}).Lists(list, "")
+	_ = core.NewDao(d.Model).SetOrderBy([]types.KeyVal{{Key: "list_sort"}, {Key: "id"}}).Lists(list, "")
 	return list
 }

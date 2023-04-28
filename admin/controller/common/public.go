@@ -1,9 +1,3 @@
-// +----------------------------------------------------------------------
-// | B5GoCMF V1.0 [快捷通用基础管理开发平台]
-// +----------------------------------------------------------------------
-// | Author: 冰舞 <357145480@qq.com>
-// +----------------------------------------------------------------------
-
 package common
 
 import (
@@ -12,6 +6,7 @@ import (
 	. "b5gocmf/common/daos/system"
 	. "b5gocmf/common/services/system"
 	"b5gocmf/utils/tool"
+	"fmt"
 	"github.com/dchest/captcha"
 	"github.com/gin-gonic/gin"
 	"net/http"
@@ -29,31 +24,33 @@ func NewPublicController() *PublicController {
 	return c
 }
 
-func (c *PublicController) Route(engine *gin.Engine,group *gin.RouterGroup) {
-	group.GET(c.Dispatch("login",false, c.Login))
-	group.POST(c.Dispatch("tologin",false, c.ToLogin))
-	group.GET(c.Dispatch("logout",false, c.LogOut))
-	group.POST(c.Dispatch("captcha_id",false, c.CaptchaId))
-	group.GET(c.Dispatch("captcha_img",false, c.CaptchaImg))
-	group.GET(c.Dispatch("download",false, c.DownLoad))
-	group.POST(c.Dispatch("test",false, c.Test))
-	group.GET(c.Dispatch("test1",false, c.Test1))
+func (c *PublicController) Route(engine *gin.Engine, group *gin.RouterGroup) {
+	group.GET(c.Dispatch("login", false, c.Login))
+	group.POST(c.Dispatch("tologin", false, c.ToLogin))
+	group.GET(c.Dispatch("logout", false, c.LogOut))
+	group.POST(c.Dispatch("captcha_id", false, c.CaptchaId))
+	group.GET(c.Dispatch("captcha_img", false, c.CaptchaImg))
+	group.GET(c.Dispatch("download", false, c.DownLoad))
+	group.POST(c.Dispatch("test", false, c.Test))
+	group.GET(c.Dispatch("test1", false, c.Test1))
 }
 
-func (c *PublicController) Test(ctx *gin.Context)  {
+func (c *PublicController) Test(ctx *gin.Context) {
 	service := NewConfigService()
-	c.Success(ctx,"",map[string]string{"appid":service.GetValue("wechat_appid"),"appsecret":service.GetValue("wechat_appsecret")})
+	c.Success(ctx, "", map[string]string{"appid": service.GetValue("wechat_appid"), "appsecret": service.GetValue("wechat_appsecret")})
 }
-func (c *PublicController) Test1(ctx *gin.Context)  {
-	c.Render(ctx,"login",nil)
+func (c *PublicController) Test1(ctx *gin.Context) {
+	c.Render(ctx, "login", nil)
 }
 
 func (c *PublicController) Login(ctx *gin.Context) {
 	_, err := services.CheckLoginCookie(ctx)
 	if err == nil {
-		ctx.Redirect(http.StatusMovedPermanently, NewIndexController().ParseUrl("index",true))
+		ctx.Redirect(http.StatusMovedPermanently, NewIndexController().ParseUrl("index", true))
 		return
 	}
+
+	fmt.Println("哈啊哈哈哈哈查询")
 	c.Render(ctx, "login", nil)
 }
 

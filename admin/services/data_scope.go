@@ -1,9 +1,3 @@
-// +----------------------------------------------------------------------
-// | B5GoCMF V1.0 [快捷通用基础管理开发平台]
-// +----------------------------------------------------------------------
-// | Author: 冰舞 <357145480@qq.com>
-// +----------------------------------------------------------------------
-
 package services
 
 import (
@@ -23,21 +17,20 @@ func DataScopeTypeList() []types.KeyVal {
 }
 
 type DataScopeFilter struct {
-	LoginData *LoginData
-	powerData *dataScopeUserPower
+	LoginData      *LoginData
+	powerData      *dataScopeUserPower
 	powerDataLevel *dataScopeUserPower
 	sync.Mutex
 }
 
 func NewDataScopeFilterByCtx(ctx *gin.Context) *DataScopeFilter {
-	return &DataScopeFilter{powerData:nil,LoginData:GetLoginByCtx(ctx)}
+	return &DataScopeFilter{powerData: nil, LoginData: GetLoginByCtx(ctx)}
 }
 
 type dataScopeUserPower struct {
-	NoPower   bool     // true 无任何权限
-	AllPower  bool     // true 所有权限
-	IsUser    bool     //true代表自己的数据
-
+	NoPower  bool // true 无任何权限
+	AllPower bool // true 所有权限
+	IsUser   bool //true代表自己的数据
 
 	StructIds []string // 有权限的组织id数组(包含本部门，本部门及以下，自定义部门)，使用in查询
 
@@ -69,39 +62,39 @@ func (ds *DataScopeFilter) GetQueryParams(structField string, userField string) 
 	}
 
 	var (
-		whereUser string
+		whereUser   string
 		whereStruct string
 	)
-	if userField !="" {
+	if userField != "" {
 		if powerData.IsUser {
 			whereUser = " `" + userField + "` = ? "
 			args = append(args, ds.LoginData.Id)
 		}
 	}
 	if structField != "" {
-		if len(powerData.StructIds)>0{
-			if len(powerData.StructIds)== 1 {
+		if len(powerData.StructIds) > 0 {
+			if len(powerData.StructIds) == 1 {
 				whereStruct = " `" + structField + "` = ? "
 				args = append(args, powerData.StructIds[0])
-			}else{
+			} else {
 				whereStruct = " `" + structField + "` in (?) "
 				args = append(args, powerData.StructIds)
 			}
 		}
 	}
-	if whereStruct == "" &&  whereUser == ""{
+	if whereStruct == "" && whereUser == "" {
 		return
 	}
-	if whereStruct != "" &&  whereUser != "" {
-		whereStr = "("+whereUser+" OR "+whereStruct+")"
-	}else{
+	if whereStruct != "" && whereUser != "" {
+		whereStr = "(" + whereUser + " OR " + whereStruct + ")"
+	} else {
 		whereStr = whereUser + whereStruct
 	}
 	return
 }
 
-//CheckByFiled 根据传入的组织ID和用户ID 判断是否有权限
-func (ds *DataScopeFilter) CheckByFiled(structId string,userId string) bool {
+// CheckByFiled 根据传入的组织ID和用户ID 判断是否有权限
+func (ds *DataScopeFilter) CheckByFiled(structId string, userId string) bool {
 	if structId == "" && userId == "" {
 		return false
 	}
@@ -115,7 +108,7 @@ func (ds *DataScopeFilter) CheckByFiled(structId string,userId string) bool {
 	if len(powerData.StructIds) == 0 && !powerData.IsUser { //未查询到组织及非个人 无权限
 		return false
 	}
-	if structId != "" && tool.InArray(structId,powerData.StructIds){
+	if structId != "" && tool.InArray(structId, powerData.StructIds) {
 		return true
 	}
 	if userId != "" && powerData.IsUser && userId == ds.LoginData.Id {
@@ -124,22 +117,22 @@ func (ds *DataScopeFilter) CheckByFiled(structId string,userId string) bool {
 	return false
 }
 
-//getPowerData 获取根据parseDataScopePower解析的权限
+// getPowerData 获取根据parseDataScopePower解析的权限
 func (ds *DataScopeFilter) getPowerData(isLevel bool) *dataScopeUserPower {
 	ds.Lock()
 	if isLevel {
-		if ds.powerDataLevel == nil{
+		if ds.powerDataLevel == nil {
 			ds.powerDataLevel = ds.parseDataScopePowerByLevels()
 		}
-	}else{
-		if ds.powerData == nil{
+	} else {
+		if ds.powerData == nil {
 			ds.powerData = ds.parseDataScopePower()
 		}
 	}
 	ds.Unlock()
 	if isLevel {
 		return ds.powerDataLevel
-	}else{
+	} else {
 		return ds.powerData
 	}
 
@@ -223,13 +216,10 @@ func (ds *DataScopeFilter) parseDataScopePower() *dataScopeUserPower {
 	return res
 }
 
-
-
 //////      信息表中增加融入字段 struct_levels存储组织的上级树，当单独二级以下的子组织较多时将近1000或大于1000   /////////
 
-
-//GetQueryParamsByLevel 基于组织架构的levels 来判断子组织
-func (ds *DataScopeFilter) GetQueryParamsByLevel(structField string,structLevelField string, userField string) (whereStr string, args []any) {
+// GetQueryParamsByLevel 基于组织架构的levels 来判断子组织
+func (ds *DataScopeFilter) GetQueryParamsByLevel(structField string, structLevelField string, userField string) (whereStr string, args []any) {
 	whereStr = " 0 "
 	args = make([]any, 0)
 
@@ -245,27 +235,27 @@ func (ds *DataScopeFilter) GetQueryParamsByLevel(structField string,structLevelF
 		whereStr = ""
 		return
 	}
-	if len(powerData.StructIds) == 0 && !powerData.IsUser && powerData.StructLevels == ""{ //未查询到组织及非个人 无权限
+	if len(powerData.StructIds) == 0 && !powerData.IsUser && powerData.StructLevels == "" { //未查询到组织及非个人 无权限
 		return
 	}
 
 	var (
 		whereStruct string
-		whereUser string
+		whereUser   string
 	)
 
-	if userField !="" {
+	if userField != "" {
 		if powerData.IsUser {
 			whereUser = " `" + userField + "` = ? "
 			args = append(args, ds.LoginData.Id)
 		}
 	}
 
-	if len(powerData.StructIds)>0 {
-		if len(powerData.StructIds)== 1 {
+	if len(powerData.StructIds) > 0 {
+		if len(powerData.StructIds) == 1 {
 			whereStruct = " `" + structField + "` = ? "
 			args = append(args, powerData.StructIds[0])
-		}else{
+		} else {
 			whereStruct = " `" + structField + "` in (?) "
 			args = append(args, powerData.StructIds)
 		}
@@ -274,23 +264,23 @@ func (ds *DataScopeFilter) GetQueryParamsByLevel(structField string,structLevelF
 		if whereStruct != "" {
 			whereStruct += "OR"
 		}
-		whereStruct  += " find_in_set ( ? ,`"+structLevelField+"`)"
+		whereStruct += " find_in_set ( ? ,`" + structLevelField + "`)"
 		args = append(args, powerData.StructLevels)
 	}
-	if whereStruct == "" &&  whereUser == ""{
+	if whereStruct == "" && whereUser == "" {
 		return
 	}
-	if whereStruct != "" &&  whereUser != "" {
-		whereStr = "("+whereUser+" OR "+whereStruct+")"
-	}else{
+	if whereStruct != "" && whereUser != "" {
+		whereStr = "(" + whereUser + " OR " + whereStruct + ")"
+	} else {
 		whereStr = whereUser + whereStruct
 	}
 	fmt.Println(whereUser)
 	return
 }
 
-//CheckByFiledLevels 根据传入的组织ID和用户ID 判断是否有权限
-func (ds *DataScopeFilter) CheckByFiledLevels(structId string,structLevel string,userId string) bool {
+// CheckByFiledLevels 根据传入的组织ID和用户ID 判断是否有权限
+func (ds *DataScopeFilter) CheckByFiledLevels(structId string, structLevel string, userId string) bool {
 	if structId == "" || structLevel == "" {
 		return false
 	}
@@ -306,12 +296,12 @@ func (ds *DataScopeFilter) CheckByFiledLevels(structId string,structLevel string
 	}
 
 	if structLevel != "" && powerData.StructLevels != "" {
-		if strings.Index(structLevel+",",powerData.StructLevels+",") >-1 {
+		if strings.Index(structLevel+",", powerData.StructLevels+",") > -1 {
 			return true
 		}
 	}
 
-	if structId != "" && tool.InArray(structId,powerData.StructIds){
+	if structId != "" && tool.InArray(structId, powerData.StructIds) {
 		return true
 	}
 	if userId != "" && powerData.IsUser && userId == ds.LoginData.Id {
@@ -319,6 +309,7 @@ func (ds *DataScopeFilter) CheckByFiledLevels(structId string,structLevel string
 	}
 	return false
 }
+
 // parseDataScopePowerByLevels 使用组织结构的levels判断
 func (ds *DataScopeFilter) parseDataScopePowerByLevels() *dataScopeUserPower {
 	res := &dataScopeUserPower{}

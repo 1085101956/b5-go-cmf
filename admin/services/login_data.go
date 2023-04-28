@@ -1,9 +1,3 @@
-// +----------------------------------------------------------------------
-// | B5GoCMF V1.0 [快捷通用基础管理开发平台]
-// +----------------------------------------------------------------------
-// | Author: 冰舞 <357145480@qq.com>
-// +----------------------------------------------------------------------
-
 package services
 
 import (
@@ -37,7 +31,7 @@ func CheckLoginCookie(ctx *gin.Context) (*LoginData, error) {
 	return nil, errors.New("登录失效：已过期")
 }
 
-func GetLoginByCtx(ctx *gin.Context) *LoginData  {
+func GetLoginByCtx(ctx *gin.Context) *LoginData {
 	loginCache, exists := ctx.Get("_login_")
 	if !exists {
 		return nil
@@ -80,7 +74,7 @@ func CreateLoginCookie(data *LoginData, exp int) (string, error) {
 		exp = 24 * 60 * 60
 	}
 	exps := time.Now().Unix() + int64(exp)
-	token, err :=tool.CreateTokenJwt(data,exps)
+	token, err := tool.CreateTokenJwt(data, exps)
 	if err != nil {
 		return "", err
 	}

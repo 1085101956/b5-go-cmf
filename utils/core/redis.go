@@ -1,9 +1,3 @@
-// +----------------------------------------------------------------------
-// | B5GoCMF V1.0 [快捷通用基础管理开发平台]
-// +----------------------------------------------------------------------
-// | Author: 冰舞 <357145480@qq.com>
-// +----------------------------------------------------------------------
-
 /////      redis的简单封装，可以支持多个redis     /////
 /////      使用方法 G_Redis.Conn().Set     /////
 /////      G_Redis.Conn("xxx") 可以传入redis标识前缀 默认为default     /////
@@ -19,7 +13,7 @@ import (
 )
 
 type B5Redis struct {
-	List map[string]*redis.Client
+	List           map[string]*redis.Client
 	consistentHash *cryptic.ConsistentHashMap
 }
 
@@ -52,7 +46,7 @@ func (db *B5Redis) Conn(args ...string) *redis.Client {
 // parseItem 解析并创建连接
 func (db *B5Redis) parseItem() {
 	//创建一致性hash
-	db.consistentHash = cryptic.NewConsistentHash(5,nil)
+	db.consistentHash = cryptic.NewConsistentHash(5, nil)
 
 	list := make(map[string]*redis.Client)
 	for key, item := range G_CONFIG.Redis {
@@ -68,7 +62,6 @@ func (db *B5Redis) parseItem() {
 	}
 	db.List = list
 }
-
 
 // HashConn 获取缓存标识对应的redis配置标识
 func (db *B5Redis) HashConn(key string) *redis.Client {

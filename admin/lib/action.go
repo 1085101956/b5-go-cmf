@@ -1,9 +1,3 @@
-// +----------------------------------------------------------------------
-// | B5GoCMF V1.0 [快捷通用基础管理开发平台]
-// +----------------------------------------------------------------------
-// | Author: 冰舞 <357145480@qq.com>
-// +----------------------------------------------------------------------
-
 package lib
 
 // ** 后台公共操作方法增删改查实现 ** //
@@ -22,7 +16,7 @@ import (
 )
 
 type HookAction struct {
-	BeforeAction func(ctx *gin.Context,action string) bool //该controller所有路由进行请求前的逻辑判断处理
+	BeforeAction func(ctx *gin.Context, action string) bool //该controller所有路由进行请求前的逻辑判断处理
 
 	IndexRender  func(ctx *gin.Context) (map[string]any, error)                  //首页渲染前进行数据分配及逻辑处理
 	IndexAfter   func(ctx *gin.Context, list []any) []any                        //首页列表返回前对返回的数据进行处理

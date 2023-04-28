@@ -1,9 +1,3 @@
-// +----------------------------------------------------------------------
-// | B5GoCMF V1.0 [快捷通用基础管理开发平台]
-// +----------------------------------------------------------------------
-// | Author: 冰舞 <357145480@qq.com>
-// +----------------------------------------------------------------------
-
 package lib
 
 import (
@@ -13,8 +7,8 @@ import (
 
 // 定义特定的code值
 const (
-	RSuccess  int = 0
-	RFail     int = 300
+	RSuccess int = 0
+	RFail    int = 300
 	RNoLogin int = 305
 )
 
@@ -36,7 +30,7 @@ func JsonFail(ctx *gin.Context, args ...any) {
 //	2 code int
 //	3 url string
 func JsonArgsParse(success bool, args ...any) map[string]any {
-	var msg, data, code,url any
+	var msg, data, code, url any
 	if len(args) > 0 && args[0] != nil {
 		msg = args[0]
 	} else {
@@ -60,10 +54,10 @@ func JsonArgsParse(success bool, args ...any) map[string]any {
 			code = RFail
 		}
 	}
-	if len(args)>3 && args[3] !=nil {
+	if len(args) > 3 && args[3] != nil {
 		url = args[3]
-	}else{
+	} else {
 		url = ""
 	}
-	return map[string]any{"code": code, "msg": msg, "data": data, "success": success,"url":url}
+	return map[string]any{"code": code, "msg": msg, "data": data, "success": success, "url": url}
 }

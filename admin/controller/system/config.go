@@ -1,9 +1,3 @@
-// +----------------------------------------------------------------------
-// | B5GoCMF V1.0 [快捷通用基础管理开发平台]
-// +----------------------------------------------------------------------
-// | Author: 冰舞 <357145480@qq.com>
-// +----------------------------------------------------------------------
-
 package system
 
 import (
@@ -15,21 +9,23 @@ import (
 	"b5gocmf/utils/trans"
 	"b5gocmf/utils/types"
 	"errors"
+	"fmt"
 	"github.com/gin-gonic/gin"
+	"github.com/gin-gonic/gin/binding"
 )
 
 // Route 定义该控制器的路由
-func (c *ConfigController) Route(engine *gin.Engine,group *gin.RouterGroup) {
-	group.GET(c.Dispatch("index",false, c.Index))
-	group.POST(c.Dispatch("index",false, c.FindList))
-	group.GET(c.Dispatch("add",false, c.Add))
-	group.POST(c.Dispatch("add",false, c.AddSave))
-	group.GET(c.Dispatch("edit",false, c.Edit))
-	group.POST(c.Dispatch("edit",false, c.EditSave))
-	group.POST(c.Dispatch("drop",false, c.Drop))
-	group.POST(c.Dispatch("drop_all",false, c.DropAll))
-	group.GET(c.Dispatch("site",false, c.Site))
-	group.POST(c.Dispatch("site",false, c.SiteSave))
+func (c *ConfigController) Route(engine *gin.Engine, group *gin.RouterGroup) {
+	group.GET(c.Dispatch("index", false, c.Index))
+	group.POST(c.Dispatch("index", false, c.FindList))
+	group.GET(c.Dispatch("add", false, c.Add))
+	group.POST(c.Dispatch("add", false, c.AddSave))
+	group.GET(c.Dispatch("edit", false, c.Edit))
+	group.POST(c.Dispatch("edit", false, c.EditSave))
+	group.POST(c.Dispatch("drop", false, c.Drop))
+	group.POST(c.Dispatch("drop_all", false, c.DropAll))
+	group.GET(c.Dispatch("site", false, c.Site))
+	group.POST(c.Dispatch("site", false, c.SiteSave))
 }
 
 type ConfigController struct {
@@ -52,11 +48,18 @@ func NewConfigController() *ConfigController {
 
 func (c *ConfigController) Site(ctx *gin.Context) {
 	groups := NewConfigService().GetListByGroup()
+	fmt.Println(groups)
 	c.Render(ctx, "site", gin.H{"groups": groups})
 }
 func (c *ConfigController) SiteSave(ctx *gin.Context) {
 	autokey := &types.AutoKey{}
+	fmt.Println("54qqqq")
 	err := ctx.ShouldBind(autokey)
+	fmt.Println(autokey)
+	_ = ctx.ShouldBindBodyWith(autokey, binding.JSON)
+	fmt.Println("ddddd")
+	fmt.Println(autokey)
+	fmt.Println(err)
 	if err != nil {
 		c.Error(ctx, "数据提交失败")
 		return
@@ -87,7 +90,7 @@ func (c *ConfigController) indexAfter(ctx *gin.Context, list []any) []any {
 
 // FindList 获取列表json
 func (c *ConfigController) FindList(ctx *gin.Context) {
-	c.GetIndex(ctx, NewConfigModel().NewSlice(), "", nil, []types.KeyVal{{Key: "is_sys",Value: "desc"}})
+	c.GetIndex(ctx, NewConfigModel().NewSlice(), "", nil, []types.KeyVal{{Key: "is_sys", Value: "desc"}})
 }
 
 // Add 覆盖
