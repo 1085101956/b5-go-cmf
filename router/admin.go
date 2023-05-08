@@ -1,6 +1,7 @@
 package router
 
 import (
+	"b5gocmf/admin/controller/books"
 	"b5gocmf/admin/controller/common"
 	"b5gocmf/admin/controller/demo"
 	"b5gocmf/admin/controller/system"
@@ -39,6 +40,7 @@ func (router *Router) Admin(engine *gin.Engine) {
 	common.NewPublicController().Route(engine, group)
 	common.NewCommonController().Route(engine, group)
 
+	books.NewBooksController().Route(engine, group)
 	//system分组
 	system.NewNoticeController().Route(engine, group)
 	system.NewLoginLogController().Route(engine, group)

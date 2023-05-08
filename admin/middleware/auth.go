@@ -7,7 +7,6 @@ import (
 	"b5gocmf/utils/core"
 	"b5gocmf/utils/tool"
 	"errors"
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"strings"
@@ -17,7 +16,7 @@ import (
 func AuthAdminMiddleWare() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		path := ctx.Request.URL.Path
-		fmt.Println(ctx, core.G_CONFIG.Route.Admin)
+		//fmt.Println(ctx, core.G_CONFIG.Route.Admin)
 
 		prefix := core.G_CONFIG.Route.Admin
 		if prefix == path {
